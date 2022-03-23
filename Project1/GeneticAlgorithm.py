@@ -27,6 +27,7 @@ class Individual:
         self.bitstring = bs
         self.fitness = f
         self.parents = parents
+        self.sjuk_variabel = 42069
 
     def __repr__(self):
         return f"Bitstring: {self.bitstring}\n Fitness: {self.fitness}\n"
@@ -57,7 +58,6 @@ class GeneticAlgorithm:
         self.phi = phi
         self.current_gen = 0
         self.entropies = []
-
 
     """Initialization and main loop"""
     def init_population(self):
@@ -158,7 +158,7 @@ class GeneticAlgorithm:
     """ Crowding functions """
     def general_crowding(self, b1, b2):
         if b1.fitness > b2.fitness:
-            p1 = b1.fitness + self.phi * b2.fitness
+            p1 = b1.fitness / (b1.fitness + self.phi * b2.fitness)
         elif b1.fitness < b2.fitness:
             p1 = (self.phi*b1.fitness) / (self.phi*b1.fitness + b2.fitness)
         else:
